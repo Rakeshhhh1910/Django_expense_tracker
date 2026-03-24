@@ -1,0 +1,46 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+
+<div style="max-width:520px; margin:0 auto;">
+
+    <div style="margin-bottom:24px;">
+        <h2 style="font-size:1.5rem; font-weight:700;">
+            {% if edit %}✏️ Edit Expense{% else %}➕ Add New Expense{% endif %}
+        </h2>
+        <p style="color:rgba(255,255,255,0.4); font-size:0.9rem; margin-top:4px;">
+            {% if edit %}Update the details below{% else %}Track your spending{% endif %}
+        </p>
+    </div>
+
+    <div class="glass">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div style="margin-bottom:20px;">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p style="color:#fca5a5; font-size:0.82rem; margin-top:6px;">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                style="width:100%; padding:14px; background:linear-gradient(135deg,#a78bfa,#60a5fa);
+                       color:white; border:none; border-radius:12px; font-size:1rem;
+                       font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
+                       transition:opacity 0.2s; letter-spacing:0.5px;">
+                {% if edit %}💾 Update Expense{% else %}💾 Save Expense{% endif %}
+            </button>
+        </form>
+    </div>
+
+    <a href="/" style="display:block; text-align:center; margin-top:20px;
+                       color:rgba(255,255,255,0.35); text-decoration:none; font-size:0.9rem;">
+        ← Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}
